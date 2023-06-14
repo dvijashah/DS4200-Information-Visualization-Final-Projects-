@@ -1,1 +1,67 @@
+import pandas as pd
 
+import altair as alt
+
+ 
+
+data = pd.read_csv('canopy_data.csv')
+
+ 
+
+data = data.head(5000)
+
+ 
+
+# Set interactive feature: select points for bar graph
+
+brush = alt.selection_interval()
+
+ 
+
+# Scatterplot
+
+scatterplot = alt.Chart(data, title="Canopy Tree vs Shape Area").mark_point(filled=True).encode(
+
+    x='FID',
+
+    y=alt.Y('Shape__Area', axis=alt.Axis(title='Shape Area')),
+
+    color='Shape__Area:Q',
+
+    # Add interactive feature: view data when hovering over point
+
+    tooltip=['Shape__Area', 'FID'],
+
+    size='Shape__Area:Q'
+
+# Add interactive feature: select points for bar graph
+
+).add_selection(brush
+
+# Set size of scatter plot
+
+).properties(width=200)
+
+ 
+
+# Bar chart
+
+bars = alt.Chart(data, title='Shape Area vs Tree Count').mark_bar().encode(
+
+    x = alt.X('Shape__Area', bin = alt.BinParams(maxbins = 10), axis=alt.Axis(title='Shape Area')),
+
+    y = alt.Y('count()', axis=alt.Axis(title='Tree Count')),
+
+    color='Shape__Area:Q',
+
+    ).transform_filter(brush
+
+# Set size of bar chart
+
+).properties(width=200)
+
+ 
+
+# Plot
+
+scatterplot | bars
