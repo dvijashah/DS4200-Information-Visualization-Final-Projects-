@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.9.3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.1"></script>
+</head>
+<body>
+  <div id="vis"/>
+  <script>
+    const spec = {
+  "config": {"view": {"continuousWidth": 300, "continuousHeight": 300}},
+  "vconcat": [
+    {
+      "hconcat": [
+        {
+          "mark": {"type": "circle"},
+          "encoding": {
+            "color": {
+              "condition": {
+                "test": "(datum['Nitrogen Dioxide AQI Value'] === max(datum['Ozone AQI Value']))",
+                "value": "blue"
+              },
+              "value": "green"
+            },
+            "opacity": {
+              "condition": {"param": "param_3", "value": 1},
+              "value": 0.5
+            },
+            "tooltip": [
+              {
+                "field": "Date",
+                "format": "%d/%m/%y",
+                "title": "Date",
+                "type": "temporal"
+              },
+              {"field": "Nitrogen Dioxide AQI Value", "type": "quantitative"}
+            ],
+            "x": {
+              "axis": {"format": "%b", "title": "Month"},
+              "field": "Date",
+              "timeUnit": "monthdate",
+              "type": "temporal"
+            },
+            "y": {"field": "Nitrogen Dioxide AQI Value", "type": "quantitative"}
+          },
+          "height": 250,
+          "name": "view_5",
+          "width": 400
+        },
+        {
+          "mark": {"type": "circle"},
+          "encoding": {
+            "color": {
+              "condition": {
+                "test": "(datum['Ozone AQI Value'] === max(datum['Nitrogen Dioxide AQI Value']))",
+                "value": "blue"
+              },
+              "value": "green"
+            },
+            "opacity": {
+              "condition": {"param": "param_3", "value": 1},
+              "value": 0.5
+            },
+            "tooltip": [
+              {
+                "field": "Date",
+                "format": "%d/%m/%y",
+                "title": "Date",
+                "type": "temporal"
+              },
+              {"field": "Ozone AQI Value", "type": "quantitative"}
+            ],
+            "x": {
+              "axis": {"format": "%b", "title": "Month"},
+              "field": "Date",
+              "timeUnit": "monthdate",
+              "type": "temporal"
+            },
+            "y": {"field": "Ozone AQI Value", "type": "quantitative"}
+          },
+          "height": 250,
+          "name": "view_6",
+          "width": 400
+        }
+      ]
+    },
+    {
+      "hconcat": [
+        {
+          "hconcat": [
+            {
+              "mark": {"type": "text", "align": "center"},
+              "encoding": {
+                "text": {
+                  "field": "Date",
+                  "format": "%m/%d/%y",
+                  "type": "temporal"
+                },
+                "y": {"axis": null, "field": "row_number", "type": "ordinal"}
+              },
+              "title": {"text": "Date", "align": "center"},
+              "transform": [
+                {"filter": {"param": "param_3"}},
+                {
+                  "window": [
+                    {"op": "row_number", "field": "", "as": "row_number"}
+                  ]
+                },
+                {"filter": "(datum.row_number < 15)"}
+              ],
+              "width": 100
+            }
+          ]
+        },
+        {
+          "hconcat": [
+            {
+              "mark": {"type": "text", "align": "center"},
+              "encoding": {
+                "text": {
+                  "field": "Nitrogen Dioxide AQI Value",
+                  "type": "nominal"
+                },
+                "y": {"axis": null, "field": "row_number", "type": "ordinal"}
+              },
+              "title": {
+                "text": "Nitrogen Dioxide AQI Value",
+                "align": "center"
+              },
+              "transform": [
+                {"filter": {"param": "param_3"}},
+                {
+                  "window": [
+                    {"op": "row_number", "field": "", "as": "row_number"}
+                  ]
+                },
+                {"filter": "(datum.row_number < 15)"}
+              ],
+              "width": 100
+            },
+            {
+              "mark": {"type": "text", "align": "center"},
+              "encoding": {
+                "text": {"field": "Ozone AQI Value", "type": "nominal"},
+                "y": {"axis": null, "field": "row_number", "type": "ordinal"}
+              },
+              "title": {"text": "Ozone AQI Value", "align": "center"},
+              "transform": [
+                {"filter": {"param": "param_3"}},
+                {
+                  "window": [
+                    {"op": "row_number", "field": "", "as": "row_number"}
+                  ]
+                },
+                {"filter": "(datum.row_number < 15)"}
+              ],
+              "width": 100
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "data": {"name": "data-d7bc2017f03d908ee9eeb3e75646dd30"},
+  "params": [
+    {
+      "name": "param_3",
+      "select": {"type": "interval", "encodings": ["x", "y"]},
+      "views": ["view_5", "view_6"]
+    }
+  ],
+  "title": "Nitrogen AQI value and Ozone Dioxide AQI value in Boston- 2022",
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json",
+  "datasets": {
+    "data-d7bc2017f03d908ee9eeb3e75646dd30": [
+      {
+        "Date": "01/01/2022",
+        "Ozone AQI Value": 9,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 24,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/02/2022",
+        "Ozone AQI Value": 29,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 16,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/06/2022",
+        "Ozone AQI Value": 22,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 22,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/08/2022",
+        "Ozone AQI Value": 29,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 42,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 12,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/11/2022",
+        "Ozone AQI Value": 30,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 31,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 35,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/14/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 39,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 22,
+        "Carbon Monoxide AQI Value": 11,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/15/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 14,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/18/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 19,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/22/2022",
+        "Ozone AQI Value": 30,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 42,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/26/2022",
+        "Ozone AQI Value": 32,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 27,
+        "PM2.5 AQI Value": 33,
+        "PM10 AQI Value": 16,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/28/2022",
+        "Ozone AQI Value": 24,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 33,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "01/29/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 14,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 9,
+        "Carbon Monoxide AQI Value": 3,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "02/01/2022",
+        "Ozone AQI Value": 15,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 62,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 20,
+        "Carbon Monoxide AQI Value": 15,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "02/03/2022",
+        "Ozone AQI Value": 20,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 37,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": 9,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "02/04/2022",
+        "Ozone AQI Value": 27,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 39,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 7,
+        "Carbon Monoxide AQI Value": 8,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "02/05/2022",
+        "Ozone AQI Value": 32,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 22,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "02/06/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 37,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "02/15/2022",
+        "Ozone AQI Value": 29,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 40,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "02/20/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 13,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "02/21/2022",
+        "Ozone AQI Value": 30,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 37,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "02/24/2022",
+        "Ozone AQI Value": 28,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 34,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "03/02/2022",
+        "Ozone AQI Value": 36,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 44,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "03/04/2022",
+        "Ozone AQI Value": 32,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 28,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "03/06/2022",
+        "Ozone AQI Value": 37,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 27,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 15,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "03/22/2022",
+        "Ozone AQI Value": 36,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 18,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "03/29/2022",
+        "Ozone AQI Value": 30,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 12,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "04/03/2022",
+        "Ozone AQI Value": 40,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 37,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "04/04/2022",
+        "Ozone AQI Value": 37,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 19,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "04/07/2022",
+        "Ozone AQI Value": 38,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 26,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "04/10/2022",
+        "Ozone AQI Value": 30,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 16,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "04/16/2022",
+        "Ozone AQI Value": 47,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 8,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "04/17/2022",
+        "Ozone AQI Value": 30,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 13,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 5,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "04/26/2022",
+        "Ozone AQI Value": 32,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 24,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 9,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "04/28/2022",
+        "Ozone AQI Value": 43,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 14,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "05/01/2022",
+        "Ozone AQI Value": 46,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 25,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "05/04/2022",
+        "Ozone AQI Value": 20,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 25,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "05/12/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 33,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": 2,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "05/13/2022",
+        "Ozone AQI Value": 23,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 26,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": 2,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "05/21/2022",
+        "Ozone AQI Value": 34,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 36,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "05/28/2022",
+        "Ozone AQI Value": 28,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 12,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "05/29/2022",
+        "Ozone AQI Value": 36,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 13,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 9,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "06/01/2022",
+        "Ozone AQI Value": 19,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 18,
+        "PM2.5 AQI Value": 25,
+        "PM10 AQI Value": 10,
+        "Carbon Monoxide AQI Value": 2,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "06/03/2022",
+        "Ozone AQI Value": 26,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 19,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": 1,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "06/10/2022",
+        "Ozone AQI Value": 36,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 17,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 7,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "06/13/2022",
+        "Ozone AQI Value": 44,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 18,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 10,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "06/15/2022",
+        "Ozone AQI Value": 33,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 22,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": 2,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "06/17/2022",
+        "Ozone AQI Value": 43,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 10,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "06/18/2022",
+        "Ozone AQI Value": 32,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 6,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "06/22/2022",
+        "Ozone AQI Value": 26,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 7,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 20,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "07/30/2022",
+        "Ozone AQI Value": 32,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 12,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "07/31/2022",
+        "Ozone AQI Value": 35,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 12,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 6,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "08/05/2022",
+        "Ozone AQI Value": 51,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 22,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "08/12/2022",
+        "Ozone AQI Value": 30,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 25,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 8,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "09/05/2022",
+        "Ozone AQI Value": 19,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 15,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 7,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "09/11/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 14,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 11,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "09/20/2022",
+        "Ozone AQI Value": 19,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 19,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 8,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "09/30/2022",
+        "Ozone AQI Value": 22,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 21,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "10/09/2022",
+        "Ozone AQI Value": 35,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 20,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "10/10/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 30,
+        "PM2.5 AQI Value": 38,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "10/22/2022",
+        "Ozone AQI Value": 44,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 26,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "10/26/2022",
+        "Ozone AQI Value": 14,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 24,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 8,
+        "Carbon Monoxide AQI Value": 5,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "10/29/2022",
+        "Ozone AQI Value": 28,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 29,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": 10,
+        "Carbon Monoxide AQI Value": 10,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "11/23/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 29,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": 7,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "11/29/2022",
+        "Ozone AQI Value": 20,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 24,
+        "PM2.5 AQI Value": 19,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "12/04/2022",
+        "Ozone AQI Value": 31,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 29,
+        "PM2.5 AQI Value": 20,
+        "PM10 AQI Value": 6,
+        "Carbon Monoxide AQI Value": null,
+        "Main Pollutant": null
+      },
+      {
+        "Date": "12/12/2022",
+        "Ozone AQI Value": 28,
+        "Site Name": "Dudley Square Roxbury",
+        "Nitrogen Dioxide AQI Value": 18,
+        "PM2.5 AQI Value": null,
+        "PM10 AQI Value": null,
+        "Carbon Monoxide AQI Value": 3,
+        "Main Pollutant": null
+      }
+    ]
+  }
+};
+    vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
+  </script>
+</body>
+</html>
